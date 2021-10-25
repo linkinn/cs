@@ -33,7 +33,7 @@ jobs:
         id: init
         run: terraform init
         env:
-          TF_ACTION_WORKSPACE: production
+          TF_WORKSPACE: production
 
       - name: Terraform Format
         id: fmt
