@@ -40,12 +40,22 @@ jobs:
 
       - name: Terraform validate
         id: validate
-        run: terrafom validate
+        run: terrafom validate -no-color
         continue-on-error: true
 
-      - name: Terraform create workspace
-        id: workspace
-        run: terraform workspace select production || terraform workspace new production
+      - name: Select production Workspace
+        run: terraform workspace select production
+        continue-on-error: true
+
+      - id: check_workspace
+        run: terraform workspace show
+
+      - id: output_workspace
+        run: echo ::set-output name=key::${{ steps.check_workspace.outputs['stdout'] }}
+        
+      - name: Create production workspace
+        run: terraform workspace new production
+        if: ${{ steps.output_workspace.outputs.key != 'production' }}
 
       - id: check_workspace
         run: terraform workspace show
