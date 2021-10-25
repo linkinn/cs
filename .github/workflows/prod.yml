@@ -30,6 +30,7 @@ jobs:
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
 
       - name: Terraform init
+        uses: hashicorp/terraform-github-actions/init@v0.3.6
         id: init
         run: terraform init
         env:
