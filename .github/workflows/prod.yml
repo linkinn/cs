@@ -33,7 +33,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform init -var "workspace=production" -var "prefix=${{ env.PREFIX }}"
 
       - name: Terraform Format
         id: fmt
@@ -87,7 +87,7 @@ jobs:
               body: output
             })
 
-      - name: Terraform Apply -var "workspace=production" -var "prefix=${{ env.PREFIX }}" -var "thumbprint_id=${{ env.THUMBPRINT_ID }}"
+      - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
 
