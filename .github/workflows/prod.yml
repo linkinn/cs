@@ -12,6 +12,7 @@ env:
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   PREFIX: ${{ secrets.PREFIX }}
   KUBERNETES_ROLE_ARN: ${{ secrets.KUBERNETES_ROLE_ARN }}
+  THUMBPRINT_ID: ${{ secrets.THUMBPRINT_ID }}
 
 jobs:
   create-infra-eks:
@@ -32,7 +33,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init -var workspace="production" -var prefix="${{ env.PREFIX }}"
+        run: terraform init -var workspace="production" -var prefix="${{ env.PREFIX }}" -var thumbprint_id="${{ env.THUMBPRINT_ID }}"
 
       - name: Terraform Format
         id: fmt
