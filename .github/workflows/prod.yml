@@ -32,7 +32,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init -var workspace="production"
+        run: terraform init -var workspace="production" -var prefix="${{ env.PREFIX }}"
 
       - name: Terraform Format
         id: fmt
@@ -64,7 +64,6 @@ jobs:
         id: plan
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color
-        continue-on-error: true
 
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
@@ -89,7 +88,7 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -var prefix="${{ env.PREFIX }}" -auto-approve
+        run: terraform apply -auto-approve
 
   deploy:
     name: Deploy to EKS
