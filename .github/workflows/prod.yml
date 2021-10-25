@@ -47,12 +47,14 @@ jobs:
         run: terraform workspace select production
         continue-on-error: true
 
-      - id: check_workspace
+      - name: Check workspace
+        id: check_workspace
         run: terraform workspace show
 
-      - id: output_workspace
+      - name: Output workspace
+        id: output_workspace
         run: echo ::set-output name=key::${{ steps.check_workspace.outputs['stdout'] }}
-        
+
       - name: Create production workspace
         run: terraform workspace new production
         if: ${{ steps.output_workspace.outputs.key != 'production' }}
