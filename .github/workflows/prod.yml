@@ -56,8 +56,8 @@ jobs:
         run: echo ::set-output name=key::${{ steps.check_workspace.outputs['stdout'] }}
 
       - name: Create production workspace
-        run: terraform workspace new production
         if: ${{ steps.output_workspace.outputs.key != 'production' }}
+        run: terraform workspace new production
 
       - id: check_workspace
         run: terraform workspace show
