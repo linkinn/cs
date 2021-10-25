@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cs-app
+  namespace: kube-system
+  labels:
+    app: cs-app
+spec:
+  selector:
+    matchLabels:
+      app: cs-app
+  replicas: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: cs-app
+    spec:
+      serviceAccountName: alb-ingress-controller
+      containers:
+      - name: cs-app
+        image: fillipi/go-teste
+        ports:
+        - containerPort: 8080
