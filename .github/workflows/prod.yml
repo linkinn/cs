@@ -59,7 +59,8 @@ jobs:
         if: ${{ steps.output_workspace.outputs.key != 'production' }}
         run: terraform workspace new production
 
-      - id: check_workspace
+      - name: Check workspace
+        id: check_workspace
         run: terraform workspace show
 
       - name: Terraform Plan
