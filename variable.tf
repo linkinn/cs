@@ -27,3 +27,7 @@ variable "machine_type" {
 variable "thumbprint_id" {
   default = "value"
 }
+
+variable "workspace" {
+  default = "staging"
+}
