@@ -12,7 +12,6 @@ env:
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   PREFIX: ${{ secrets.PREFIX }}
   KUBERNETES_ROLE_ARN: ${{ secrets.KUBERNETES_ROLE_ARN }}
-  THUMBPRINT_ID: ${{ secrets.THUMBPRINT_ID }}
 
 jobs:
   create-infra-eks:
@@ -56,10 +55,6 @@ jobs:
       - name: Output workspace
         id: output_workspace
         run: echo ::set-output name=key::${{ steps.check_workspace.outputs['stdout'] }}
-
-      # - name: Create production workspace
-      #   if: ${{ steps.output_workspace.outputs.key != 'production' }}
-      #   run: terraform workspace new production
 
       - name: Terraform Plan
         id: plan
@@ -111,7 +106,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Connect with cluster
-        run: aws eks --region ${{ env.AWS_REGION }} update-kubeconfig --name ${{ env.CLUSTER_NAME }}
+        run: aws eks --region ${{ env.AWS_REGION }} update-kubeconfig --name ${{ env.PREFIX }}-${{ env.CLUSTER_NAME }}
 
       - uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
