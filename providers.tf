@@ -1,7 +1,3 @@
-locals {
-  workspace = var.workspace
-}
-
 terraform {
   required_version = ">= 0.15.0"
   required_providers {
@@ -13,13 +9,9 @@ terraform {
   }
   backend "remote" {
     organization = "fillipinascimento"
-
-    workspaces {
-      name = "${locals.workspace}"
-    }
   }
 }
 
 provider "aws" {
-  region = "${locals.workspace}" == "production" ? "us-east-1" : "us-east-2"
+  region = terraform.workspace == "production" ? "us-east-1" : "us-east-2"
 }
