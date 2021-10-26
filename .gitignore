@@ -148,6 +148,7 @@ dmypy.json
 
 # Ignore .tfvars files
 .terraform
+terraform.tfvars
 
 # Ignore override files as tey are usually used to override
 # resources locally and so are not checked in
