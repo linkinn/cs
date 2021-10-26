@@ -1,3 +1,7 @@
+locals {
+  workspace = var.workspace
+}
+
 terraform {
   required_version = ">= 0.15.0"
   required_providers {
@@ -11,11 +15,11 @@ terraform {
     organization = "fillipinascimento"
 
     workspaces {
-      name = "${var.workspace}"
+      name = "${locals.workspace}"
     }
   }
 }
 
 provider "aws" {
-  region = "${var.workspace}" == "production" ? "us-east-1" : "us-east-2"
+  region = "${locals.workspace}" == "production" ? "us-east-1" : "us-east-2"
 }
