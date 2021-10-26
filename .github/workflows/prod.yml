@@ -106,7 +106,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Connect with cluster
-        run: aws eks --region ${{ env.AWS_REGION }} update-kubeconfig --name ${{ env.PREFIX }}-${{ env.CLUSTER_NAME }}
+        run: aws eks --region ${{ env.AWS_REGION }} update-kubeconfig --name linkinn-keanu
 
       - uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
