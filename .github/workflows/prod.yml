@@ -32,7 +32,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init -backend-config="workspaces=${{ env.WORKSPACES_PROD }}"
+        run: terraform init -backend-config=[{workspaces="${{ env.WORKSPACES_PROD }}"}]
 
       - name: Terraform Format
         id: fmt
