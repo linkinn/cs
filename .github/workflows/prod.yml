@@ -121,7 +121,7 @@ jobs:
         run: kubectl apply -f manifests/security.yaml
 
       - name: Injection annotations in security account
-        run: kubectl -n kube-system patch serviceaccount alb-ingress-controller -p ${{ env.SECURITY_ACCOUNT_ANNOTATIONS }}
+        run: kubectl -n kube-system patch serviceaccount alb-ingress-controller -p ${{ toJSON(env.SECURITY_ACCOUNT_ANNOTATIONS) }}
 
       - name: Deploy
         run: kubectl apply -f manifests/security.yaml
