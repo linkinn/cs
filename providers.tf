@@ -11,11 +11,11 @@ terraform {
     organization = "fillipinascimento"
 
     workspaces {
-      name = var.workspace
+      name = "${var.workspace}"
     }
   }
 }
 
 provider "aws" {
-  region = var.workspace == "production" ? "us-east-1" : "us-east-2"
+  region = "${var.workspace}" == "production" ? "us-east-1" : "us-east-2"
 }
