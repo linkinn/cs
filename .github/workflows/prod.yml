@@ -12,7 +12,6 @@ env:
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   PREFIX: ${{ secrets.PREFIX }}
   KUBERNETES_ROLE_ARN: ${{ secrets.KUBERNETES_ROLE_ARN }}
-  SECURITY_ACCOUNT_ANNOTATIONS: ${{ secrets.SECURITY_ACCOUNT_ANNOTATIONS }}
 
 jobs:
   create-infra-eks:
@@ -121,7 +120,8 @@ jobs:
         run: kubectl apply -f manifests/security.yaml
 
       - name: Injection annotations in security account
-        run: kubectl -n kube-system patch serviceaccount alb-ingress-controller -p ${{ env.SECURITY_ACCOUNT_ANNOTATIONS }}
+        run: |-
+          kubectl -n kube-system patch serviceaccount alb-ingress-controller -p '{\"metadata\": {\"annotations\": {\"eks.amazonaws.com/role-arn\": \"${{ env.KUBERNETES_ROLE_ARN }}\" }}}'
 
       - name: Deploy
         run: kubectl apply -f manifests/security.yaml
