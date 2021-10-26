@@ -24,10 +24,6 @@ variable "machine_type" {
   default = ["t2.small"]
 }
 
-variable "thumbprint_id" {
-  default = "value"
-}
-
 variable "workspace" {
   default = "staging"
 }

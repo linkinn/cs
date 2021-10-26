@@ -5,5 +5,4 @@ max_size       = 1
 min_size       = 1
 vpc_cidr_blok  = "10.0.0.0/16"
 machine_type   = ["t2.small"]
-thumbprint_id  = "651c1529e836a90c95690e9e3dc2b55eaf4a5c82"
 workspace      = "production"

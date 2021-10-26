@@ -35,7 +35,6 @@ module "route53" {
 module "oidc" {
   source                = "./modules/oidc"
   cluster_identity_oidc = module.eks.cluster_identity_oidc
-  thumbprint_id         = var.thumbprint_id
 }
 
 module "ingress" {
