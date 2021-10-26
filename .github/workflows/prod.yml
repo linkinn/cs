@@ -33,10 +33,11 @@ jobs:
       - name: Create backend hcl
         run: |
           echo workspaces = {name = "production"} > backend.hcl
+          cat backend.hcl
 
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform init -backend-config=backend.hcl
 
       - name: Terraform Format
         id: fmt
