@@ -14,7 +14,7 @@ env:
   KUBERNETES_ROLE_ARN: ${{ secrets.KUBERNETES_ROLE_ARN }}
 
 jobs:
-  create-infra-eks:
+  terraform:
     name: Setup infrastructure with terraform
     runs-on: ubuntu-latest
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init -var "workspace=production" -var "prefix=${{ env.PREFIX }}"
+        run: terraform init
 
       - name: Terraform Format
         id: fmt
@@ -84,11 +84,12 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+        run: terraform apply -var "workspace=production" -var "prefix=${{ env.PREFIX }}" -auto-approve
 
   deploy:
     name: Deploy to EKS
     runs-on: ubuntu-latest
+    needs: terraform
 
     steps:
       - name: Checkout
