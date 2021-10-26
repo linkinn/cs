@@ -108,24 +108,14 @@ jobs:
       - name: Connect with cluster
         run: aws eks --region ${{ env.AWS_REGION }} update-kubeconfig --name ${{ env.CLUSTER_NAME }}
 
-      - uses: swdotcom/update-and-apply-kubernetes-configs@v1
-        with:
-          k8-config-file-paths: |
-            manifests/security.yaml
-          replacement-method: defined
-        env:
-          KUBERNETES_ROLE_ARN: ${{ env.KUBERNETES_ROLE_ARN }}
-
       - name: Deploy security account
         run: kubectl apply -f manifests/security.yaml
 
       - name: Injection annotations in security account
-        run: |-
-          kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch '{\`"metadata`": {\`"annotations\`": {\`"eks.amazonaws.com/role-arn\`": \`"${{ env.KUBERNETES_ROLE_ARN }}\`" }}}'
+        run: kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch '{\`"metadata\`": {\`"annotations\`": {\`"eks.amazonaws.com/role-arn\`": \`"${{ env.KUBERNETES_ROLE_ARN }}\`" }}}'
 
       - name: Deploy
         run: kubectl apply -f manifests/security.yaml
 
       - name: Status
-        run: |-
-          kubectl get pods -n kube-system
+        run: kubectl get pods -n kube-system
