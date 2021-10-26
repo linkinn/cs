@@ -113,7 +113,7 @@ jobs:
 
       - name: Injection annotations in security account
         run: |
-            kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch $(echo '{"metadata": {"annotations": {"eks.amazonaws.com/role-arn": "${{ env.KUBERNETES_ROLE_ARN }}" }}}')
+            kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch '{"metadata": {"annotations": {"eks.amazonaws.com/role-arn": "${{ env.KUBERNETES_ROLE_ARN }}" }}}'
 
       - name: Deploy
         run: kubectl apply -f manifests/security.yaml
