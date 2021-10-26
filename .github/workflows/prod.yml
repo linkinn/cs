@@ -116,7 +116,7 @@ jobs:
             kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch '{"metadata": {"annotations": {"eks.amazonaws.com/role-arn": "${{ env.KUBERNETES_ROLE_ARN }}" }}}'
 
       - name: Deploy
-        run: kubectl apply -f manifests/security.yaml
+        run: kubectl apply -f manifests
 
       - name: Status
         run: kubectl get pods -n kube-system
