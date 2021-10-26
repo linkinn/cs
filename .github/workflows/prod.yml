@@ -11,6 +11,7 @@ env:
   CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   KUBERNETES_ROLE_ARN: ${{ secrets.KUBERNETES_ROLE_ARN }}
+  WORKSPACES_PROD: ${{ secrets.WORKSPACES_PROD }}
 
 jobs:
   terraform:
@@ -31,7 +32,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform init -backend-config="workspaces=${{ env.WORKSPACES_PROD }}"
 
       - name: Terraform Format
         id: fmt
