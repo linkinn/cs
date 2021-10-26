@@ -7,9 +7,7 @@ terraform {
     }
     local = ">= 2.1.0"
   }
-  backend "remote" {
-    organization = "fillipinascimento"
-  }
+  backend "remote" {}
 }
 
 provider "aws" {
