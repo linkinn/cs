@@ -98,12 +98,10 @@ jobs:
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
       - name: Push docker hub
-        env:
-          IMAGE: ${{ env.DOCKER_ID }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
         run: |
-          docker build -t $IMAGE ./demorails
+          docker build -t "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA" ./demorails
           docker push "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
-          echo "::set-output name=image::$IMAGE
+          echo "::set-output name=image::"$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
 
   eks:
     name: Deploy to EKS
@@ -136,13 +134,11 @@ jobs:
             kubectl -n kube-system patch serviceaccount alb-ingress-controller --patch '{"metadata": {"annotations": {"eks.amazonaws.com/role-arn": "${{ env.KUBERNETES_ROLE_ARN }}" }}}'
 
       - name: Deploy
-        env:
-          IMAGE: ${{ env.DOCKER_ID }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
         run: |
           cd manifests
           curl -s -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
-          ./kustomize edit set image example-eks=$IMAGE
+          ./kustomize edit set image example-eks="$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
           ./kustomize build . | kubectl apply -f -
           # Verify deployment
           kubectl rollout status deployment/cs-app
