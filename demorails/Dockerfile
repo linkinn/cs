@@ -1,6 +1,6 @@
 FROM ruby:3-alpine
 
-ENV RAILS_ENV=production
+ENV RAILS_ENV=development
 
 WORKDIR /app
 
