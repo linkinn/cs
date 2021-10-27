@@ -101,7 +101,7 @@ jobs:
 
       - name: Push docker hub
         run: |
-          docker build -t "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA" ./demorails
+          docker build -t "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA" ./demorails/.
           docker push "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
           echo "::set-output name=image::"$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
 
