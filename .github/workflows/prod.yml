@@ -20,6 +20,8 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
 
+  RAIL_KEY: ${{ secrets.RAIL_KEY }}
+
 jobs:
   # terraform:
   #   name: Setup infrastructure with terraform
@@ -105,6 +107,7 @@ jobs:
       - name: Push docker hub
         run: |
           cd demorails
+          echo "$RAIL_KEY" > config/master.key
           docker build -t "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA" .
           docker push "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
 
