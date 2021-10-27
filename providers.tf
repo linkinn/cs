@@ -7,9 +7,15 @@ terraform {
     }
     local = ">= 2.1.0"
   }
-  backend "remote" {}
+  backend "remote" {
+    organization = "fillipinascimento"
+
+    workspaces {
+      name = "production"
+    }
+  }
 }
 
 provider "aws" {
-  region = terraform.workspace == "production" ? "us-east-1" : "us-east-2"
+  region = var.workspace == "production" ? "us-east-1" : "us-east-2"
 }

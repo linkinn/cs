@@ -30,14 +30,9 @@ jobs:
           terraform_version: 0.15.5
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
 
-      - name: Create backend hcl
-        run: |
-          echo workspaces=\"production\" > backend.hcl
-          cat backend.hcl
-
       - name: Terraform init
         id: init
-        run: terraform init -backend-config=backend.hcl
+        run: terraform init -var workspace=production
 
       - name: Terraform Format
         id: fmt
@@ -47,10 +42,6 @@ jobs:
       - name: Terraform validate
         id: validate
         run: terrafom validate -no-color
-        continue-on-error: true
-
-      - name: Select production Workspace
-        run: terraform workspace select production
         continue-on-error: true
 
       - name: Check workspace
