@@ -105,6 +105,7 @@ $ terraform apply
 - DOCKER_ID
 - DOCKER_PASSWORD
 - IMAGE_NAME
+- RAIL_KEY
 
 <br/><br/>
 
