@@ -101,8 +101,8 @@ jobs:
 
       - name: Push docker hub
         run: |
-          docker build -t ${{DOCKER_ID}}/${{IMAGE_NAME}}:${{GITHUB_SHA}} ./demorails/.
-          docker push ${{DOCKER_ID}}/${{IMAGE_NAME}}:${{GITHUB_SHA}}
+          docker build -t fillipi/testandoisso:v1 ./demorails/.
+          docker push fillipi/testandoisso:v1
 
   eks:
     name: Deploy to EKS
@@ -139,7 +139,7 @@ jobs:
           cd manifests
           curl -s -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
-          ./kustomize edit set image example-eks=${{DOCKER_ID}}/${{IMAGE_NAME}}:${{GITHUB_SHA}}
+          ./kustomize edit set image example-eks=fillipi/testandoisso:v1
           ./kustomize build . | kubectl apply -f -
           # Verify deployment
           kubectl rollout status deployment/cs-app
