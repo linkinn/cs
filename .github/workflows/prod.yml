@@ -148,8 +148,6 @@ jobs:
           chmod u+x ./kustomize
           ./kustomize edit set image example-eks="$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
           ./kustomize build . | kubectl apply -f -
-          # Verify deployment
-          kubectl rollout status deployment/cs-app
 
       - name: Status
         run: |
