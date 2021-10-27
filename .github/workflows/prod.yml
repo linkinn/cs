@@ -108,7 +108,7 @@ jobs:
   eks:
     name: Deploy to EKS
     runs-on: ubuntu-latest
-    needs: terraform
+    needs: docker
 
     steps:
       - name: Checkout
