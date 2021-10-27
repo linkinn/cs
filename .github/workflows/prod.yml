@@ -101,7 +101,8 @@ jobs:
 
       - name: Push docker hub
         run: |
-          docker build -t fillipi/testandoisso:v1 ./demorails/.
+          cd demorails
+          docker build -t fillipi/testandoisso:v1 .
           docker push fillipi/testandoisso:v1
 
   eks:
