@@ -99,7 +99,7 @@ jobs:
 
       - name: Push docker hub
         env:
-          IMAGE: ${{ DOCKER_ID }}/${{ IMAGE_NAME }}:${{ GITHUB_SHA }}
+          IMAGE: ${{ env.DOCKER_ID }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
         run: |
           docker build -t $IMAGE ./demorails
           docker push "$DOCKER_ID"/"$IMAGE_NAME":"$GITHUB_SHA"
@@ -137,7 +137,7 @@ jobs:
 
       - name: Deploy
         env:
-          IMAGE: ${{ DOCKER_ID }}/${{ IMAGE_NAME }}:${{ GITHUB_SHA }}
+          IMAGE: ${{ env.DOCKER_ID }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
         run: |
           cd manifests
           curl -s -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
