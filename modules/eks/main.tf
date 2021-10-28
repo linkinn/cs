@@ -1,7 +1,15 @@
 resource "aws_security_group" "new-sg" {
-  name        = "allow_tls"
-  description = "Allow TLS inbound traffic"
+  name        = "http_access_ruby_rails"
+  description = "Access application"
   vpc_id      = var.vpc_id
+  ingress {
+    description      = "HTTP connection"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   egress {
     from_port        = 0
