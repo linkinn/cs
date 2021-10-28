@@ -3,8 +3,7 @@ resource "aws_security_group" "new-sg" {
   description = "Access application"
   vpc_id      = var.vpc_id
 
-  ingress = [
-    {
+  ingress {
       description      = "HTTP connection"
       from_port        = 80
       to_port          = 80
@@ -12,7 +11,6 @@ resource "aws_security_group" "new-sg" {
       cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
     }
-  ]
 
   egress {
     from_port        = 0
