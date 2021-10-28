@@ -2,14 +2,17 @@ resource "aws_security_group" "new-sg" {
   name        = "http_access_ruby_rails"
   description = "Access application"
   vpc_id      = var.vpc_id
-  ingress {
-    description      = "HTTP connection"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "HTTP"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
+
+  ingress = [
+    {
+      description      = "HTTP connection"
+      from_port        = 80
+      to_port          = 80
+      protocol         = "TCP"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  ]
 
   egress {
     from_port        = 0
