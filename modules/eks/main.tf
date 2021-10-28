@@ -6,7 +6,7 @@ resource "aws_security_group" "new-sg" {
     description      = "HTTP connection"
     from_port        = 80
     to_port          = 80
-    protocol         = "-1"
+    protocol         = "HTTP"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
